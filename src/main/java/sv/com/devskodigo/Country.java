@@ -13,9 +13,14 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import java.io.FileWriter;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.*;
 import java.io.IOException;
 
 public class Country implements DataOperations {
@@ -30,6 +35,9 @@ public class Country implements DataOperations {
     @Getter @Setter
     private float countryCoords;
 
+    XSSFWorkbook workbook;
+    XSSFSheet sheet;
+
     public Country(){
         readDataset();
         selectOption();
@@ -40,9 +48,10 @@ public class Country implements DataOperations {
         menuOption = 0;
         rawData = new Scanner(System.in);
         try{
-            FileWriter fileWriter = new FileWriter("country.txt");
+            workbook = new XSSFWorkbook();
+            sheet = workbook.createSheet("Country");
             System.out.println("Country dataset loaded");
-        }catch(IOException ioe){
+        }catch(Exception ioe){
             System.out.println("Error during reading dataset routine");
             ioe.printStackTrace();
         }
@@ -93,9 +102,32 @@ public class Country implements DataOperations {
     @Override
     public void addData(){
         try{
-
             //just for testing purpose: System.out.println(this.getCountryId()+"-"+this.getCountryName()+"-"+this.getCountryCoords());
-            //saveData routine
+            Map<String, Object[]> data = new TreeMap<String, Object[]>();
+            data.put("1", new Object[] {"ID", "COUNTRY_NAME", "GPS_COORDS"});
+            data.put("2", new Object[] {this.getCountryId(), this.getCountryName(), this.getCountryCoords()});
+
+            //Iterate over data and write to sheet
+            Set<String> keyset = data.keySet();
+            int rownum = 0;
+            for (String key : keyset)
+            {
+                Row row = sheet.createRow(rownum++);
+                Object [] objArr = data.get(key);
+                int cellnum = 0;
+                for (Object obj : objArr)
+                {
+                    Cell cell = row.createCell(cellnum++);
+                    if(obj instanceof String)
+                        cell.setCellValue((String)obj);
+                    else if(obj instanceof Integer)
+                        cell.setCellValue((Integer)obj);
+                }
+            }
+            //Write the workbook in file system
+            FileOutputStream out = new FileOutputStream(new File("flights.xlsx"));
+            workbook.write(out);
+            out.close();
             System.out.println("Your data is saved");
         }catch(Exception e){
             System.out.println("An error ocurred");

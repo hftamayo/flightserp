@@ -1,5 +1,8 @@
 package sv.com.devskodigo;
 
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 public class Dataset {
 
     /*
@@ -7,6 +10,8 @@ public class Dataset {
     params: fileName
      */
     public void openDataset(String filename){
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Country");
 
     }
 
