@@ -39,22 +39,22 @@ public class City implements DataOperations {
     }
 
     @Override
-    public void updateData(){
+    public void updateData(int recordId){
 
     }
 
     @Override
-    public void searchData(int usrOpt){
+    public void searchData(){
 
     }
 
     @Override
-    public void deleteData(){
+    public void deleteData(int recordId){
 
     }
 
     @Override
-    public void updateStatus(){
+    public void updateStatus(int recordId){
 
     }
 }

@@ -14,8 +14,8 @@ public interface DataOperations {
     void selectOption(); //the users needs to specify what operation will execute
     void getData(); //get user's input
     void addData(); //save data into the file
-    void updateData(); //update changes into the file
-    void searchData(int opt); //search for an specific record
-    void deleteData(); //delete a record
-    void updateStatus(); //some clases operate a status field: 0:inactive, 1: active
+    void updateData(int recordId); //update changes into the file
+    void searchData(); //search for an specific record
+    void deleteData(int recordId); //delete a record
+    void updateStatus(int recordId); //some clases operate a status field: 0:inactive, 1: active
 }

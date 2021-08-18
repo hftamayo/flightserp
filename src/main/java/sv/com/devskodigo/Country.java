@@ -21,7 +21,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.*;
-import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Country implements DataOperations {
 
@@ -37,11 +40,18 @@ public class Country implements DataOperations {
 
     XSSFWorkbook workbook;
     XSSFSheet sheet;
+    Map<String, Object[]> data;
+    int recordCounter = 1; //1 is Spreadsheet's Header
+    List cellDataList;
+    Iterator rowIterator;
 
+    //constructor method
     public Country(){
         readDataset();
         selectOption();
     }
+
+    //open dataset
 
     @Override
     public void readDataset(){
@@ -50,6 +60,8 @@ public class Country implements DataOperations {
         try{
             workbook = new XSSFWorkbook();
             sheet = workbook.createSheet("Country");
+            data = new TreeMap<String, Object[]>();
+            data.put("1", new Object[] {"ID", "COUNTRY_NAME", "GPS_COORDS"});
             System.out.println("Country dataset loaded");
         }catch(Exception ioe){
             System.out.println("Error during reading dataset routine");
@@ -60,39 +72,42 @@ public class Country implements DataOperations {
     @Override
     public void selectOption(){
         System.out.println("Country dataset: please type a number equivalent to any of the options above: ");
-        System.out.println("1. Add a Record");
-        System.out.println("2. Update a Record");
-        System.out.println("3. Delete a Record");
-        System.out.println("4. Search for a Record");
-        try{
-            menuOption = rawData.nextInt();
-            switch(menuOption){
-                case 1:
-                    this.getData();
-                    break;
-                case 2:
-                    this.searchData(2);
-                    break;
-                case 3:
-                    this.searchData(3);
-                    break;
-                case 4:
-                    this.searchData(4);
-                    break;
-            }
+        int usrContinue = 1;
+        do{
+            System.out.println("1. Add a Record");
+            System.out.println("2. Display data");
+            System.out.println("3. Back to Previous Menu");
 
-        }catch(InputMismatchException ime){
-            System.out.println("Please only type integer numbers");
-            ime.printStackTrace();
-        }
+            try{
+                menuOption = rawData.nextInt();
+                switch(menuOption){
+                    case 1:
+                        this.getData();
+                        break;
+                    case 2:
+                        this.searchData(); //updateData
+                        break;
+                    case 3:
+                        usrContinue = 0;
+                        break;
+                }
+
+            }catch(InputMismatchException ime){
+                System.out.println("Please only type integer numbers");
+                ime.printStackTrace();
+            }
+        }while(usrContinue == 1);
+
     }//end of selectOption method
 
     @Override
     public void getData(){
         System.out.println("Pleae type id number");
         this.setCountryId(rawData.nextInt());
+        //numeric input data does not send enter at the end
+        rawData.nextLine();
         System.out.println("Pleae type name");
-        this.setCountryName((rawData.next()));
+        this.setCountryName((rawData.nextLine()));
         System.out.println("Please type GPS coords");
         this.setCountryCoords(rawData.nextFloat());
         this.addData();
@@ -101,13 +116,16 @@ public class Country implements DataOperations {
 
     @Override
     public void addData(){
+        String localRecordCounter;
         try{
             //just for testing purpose: System.out.println(this.getCountryId()+"-"+this.getCountryName()+"-"+this.getCountryCoords());
-            Map<String, Object[]> data = new TreeMap<String, Object[]>();
-            data.put("1", new Object[] {"ID", "COUNTRY_NAME", "GPS_COORDS"});
-            data.put("2", new Object[] {this.getCountryId(), this.getCountryName(), this.getCountryCoords()});
+            //data = new TreeMap<String, Object[]>();
+            //data.put("1", new Object[] {"ID", "COUNTRY_NAME", "GPS_COORDS"});
+            //data.put("2", new Object[] {this.getCountryId(), this.getCountryName(), this.getCountryCoords()});
+            localRecordCounter = String.valueOf(recordCounter++);
+            data.put(localRecordCounter, new Object[] {this.getCountryId(), this.getCountryName(), this.getCountryCoords()});
 
-            //Iterate over data and write to sheet
+            //it is necesary to iterate the data to savbe it into a row
             Set<String> keyset = data.keySet();
             int rownum = 0;
             for (String key : keyset)
@@ -118,14 +136,16 @@ public class Country implements DataOperations {
                 for (Object obj : objArr)
                 {
                     Cell cell = row.createCell(cellnum++);
-                    if(obj instanceof String)
+                    if(obj instanceof String) //name
                         cell.setCellValue((String)obj);
-                    else if(obj instanceof Integer)
+                    else if(obj instanceof Integer) //id
                         cell.setCellValue((Integer)obj);
+                    else if(obj instanceof Float) //float
+                        cell.setCellValue((Float)obj);
                 }
             }
             //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream(new File("flights.xlsx"));
+            FileOutputStream out = new FileOutputStream(new File("country.xlsx"));
             workbook.write(out);
             out.close();
             System.out.println("Your data is saved");
@@ -137,21 +157,55 @@ public class Country implements DataOperations {
     }
 
     @Override
-    public void searchData(int usrOpt){
-        int countryIdTarget = 0;
+    public void searchData(){
+        int countryTarget;
+        int updateRowOperation = 0;
         boolean dataFound = false;
 
         try{
-            System.out.println("please type Country ID you're looking for:");
-            countryIdTarget = rawData.nextInt();
+            System.out.println("Displaying current list of countries");
             //searchData routine
+            cellDataList = new ArrayList();
+            rowIterator = sheet.rowIterator();
+            while (rowIterator.hasNext()) {
+                Row row = (Row) rowIterator.next();
+                Iterator iterator = row.cellIterator();
+                List cellTempList = new ArrayList();
+                while (iterator.hasNext()) {
+                    Cell cell = (Cell) iterator.next();
+                    cellTempList.add(cell);
+                }
+                cellDataList.add(cellTempList);
+            }
+            if(cellDataList.size() > 0){
+                dataFound = true;
+                //print the content of the cellDataList
+                for (int i = 0; i < cellDataList.size(); i++) {
+                    List cellTempList = (List) cellDataList.get(i);
+                    for (int j = 0; j < cellTempList.size(); j++) {
+                        Cell cell = (Cell) cellTempList.get(j);
+                        String stringCellValue = cell.toString();
+                        System.out.print(stringCellValue + "\t");
+                    }
+                    System.out.println();
+                }
+            }
+
+            //ask the user what other operation will need to execute
             if(dataFound){
-                switch(usrOpt){
-                    case 2: //updateData
-                        this.updateData();
+                System.out.println("please type Country ID you wish to update:");
+                countryTarget = rawData.nextInt();
+                System.out.println("Please type: 1->Edit Record, 2->Delete Record, 3->Back to PRevious Menu");
+                updateRowOperation = rawData.nextInt();
+
+                switch(updateRowOperation){
+                    case 1: //updateData
+                        this.updateData(countryTarget);
                         break;
-                    case 3: //deleteData
-                        this.deleteData();
+                    case 2: //deleteData
+                        this.deleteData(countryTarget);
+                        break;
+                    case 3:
                         break;
                 }//end of switch(usrOpt)
             }//end of dataFound
@@ -163,18 +217,18 @@ public class Country implements DataOperations {
 
 
     @Override
-    public void updateData(){
-
+    public void updateData(int recordId){
+        System.out.println("Cheers from Update: coming next");
     }
 
 
     @Override
-    public void deleteData(){
-
+    public void deleteData(int recordId){
+        System.out.println("Cheers from delete: coming next");
     }
 
     @Override
-    public void updateStatus(){
+    public void updateStatus(int recordId){
 
     }
 }
