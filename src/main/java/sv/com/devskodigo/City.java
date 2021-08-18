@@ -24,6 +24,16 @@ public class City implements DataOperations {
     }
 
     @Override
+    public void selectOption(){
+
+    }
+
+    @Override
+    public void getData(){
+
+    }
+
+    @Override
     public void addData(){
 
     }
@@ -34,7 +44,7 @@ public class City implements DataOperations {
     }
 
     @Override
-    public void searchData(){
+    public void searchData(int usrOpt){
 
     }
 

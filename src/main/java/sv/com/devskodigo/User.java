@@ -15,6 +15,15 @@ public class User implements DataOperations {
     }
 
     @Override
+    public void selectOption(){
+
+    }
+
+    @Override
+    public void getData(){
+
+    }
+    @Override
     public void addData(){
 
     }
@@ -25,7 +34,7 @@ public class User implements DataOperations {
     }
 
     @Override
-    public void searchData(){
+    public void searchData(int usrOpt){
 
     }
 
