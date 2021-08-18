@@ -130,7 +130,7 @@ public class Country implements DataOperations {
             out.close();
             System.out.println("Your data is saved");
         }catch(Exception e){
-            System.out.println("An error ocurred");
+            System.out.println("An error has ocurred");
             e.printStackTrace();
         }
 
