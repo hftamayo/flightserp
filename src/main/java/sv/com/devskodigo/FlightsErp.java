@@ -128,6 +128,7 @@ public class FlightsErp {
             System.out.println("2. Flight Operations");
             System.out.println("3. Reports");
             System.out.println("4. Exit");
+            System.out.println("5. Weather API");
             try{
                 menuOption = rawData.nextInt();
                 switch(menuOption){
@@ -136,6 +137,9 @@ public class FlightsErp {
                     case 3:
                         showSubMenu(menuOption);
                         break;
+                    case 5:
+                        WeatherTest wt = new WeatherTest();
+                        wt.testapi();
                     default:
                         System.out.println("thank you for use our product. Good bye");
                         mainMenu = 0;
