@@ -35,9 +35,9 @@ public class Flight implements DataOperations {
     @Getter @Setter
     private int flightId;
     @Getter @Setter
-    private int flightDescriptor;
+    private String flightDescriptor;
     @Getter @Setter
-    private LocalDateTime flightDateTimeRep;
+    private LocalDateTime flightDateTimeDep;
     @Getter @Setter
     private LocalDateTime flightDateTimeArr;
     @Getter @Setter
@@ -84,7 +84,7 @@ public class Flight implements DataOperations {
             data.put("1", new Object[] {"ID", "DESCRIPTOR", "DT DEPARTURE", "DT ARRIVE", "STATUS",
                     "WEATHER RPT", "AIRCRAFT", "AIRLINE", "COUNTRY DEP", "CITY DEP", "COUNTRY ARR",
                     "CITY ARR", "USER"});
-            System.out.println("City dataset loaded");
+            System.out.println("Flight dataset loaded");
         }catch(Exception ioe){
             System.out.println("Error during reading dataset routine");
             ioe.printStackTrace();
@@ -93,7 +93,7 @@ public class Flight implements DataOperations {
 
     @Override
     public void selectOption(){
-        System.out.println("City dataset: please type a number equivalent to any of the options above: ");
+        System.out.println("Flight dataset: please type a number equivalent to any of the options above: ");
         int usrContinue = 1;
         do{
             System.out.println("1. Add a Record");
@@ -107,7 +107,7 @@ public class Flight implements DataOperations {
                         this.getData();
                         break;
                     case 2:
-                        this.searchData(); //updateData
+                        this.searchData();
                         break;
                     case 3:
                         usrContinue = 0;
@@ -124,17 +124,42 @@ public class Flight implements DataOperations {
 
     @Override
     public void getData(){
-        System.out.println("Pleae type id number");
-        this.setCityId(rawData.nextInt());
+        System.out.println("Pleae type id");
+        this.setFlightId(rawData.nextInt());
         //numeric input data does not send enter at the end
         rawData.nextLine();
-        System.out.println("Pleae type name");
-        this.setCityName((rawData.nextLine()));
-        System.out.println("Please type GPS coords");
-        this.setCityCoords(rawData.nextFloat());
+        System.out.println("Please type Flight Descriptor");
+        this.setFlightDescriptor(rawData.nextLine());
+        System.out.println("Please type Flight Date Time of Departure");
+        //this.setFlightDateTimeDep((LocalDateTime)rawData.next());
         rawData.nextLine();
-        System.out.println("Please type an existing country id");
-        this.setCityId(rawData.nextInt());
+        System.out.println("Please type Flight Date Time of Arrive");
+        //this.setFlightDateTimeDep((LocalDateTime)rawData.next());
+        rawData.nextLine();
+        System.out.println("Please type Flight Status");
+        this.setFlightStatus(rawData.nextInt());
+        rawData.nextLine();
+        System.out.println("Please type Aircraft id");
+        this.setAircfratId(rawData.nextInt());
+        rawData.nextLine();
+        System.out.println("Please type Airline id");
+        this.setAirlineId(rawData.nextInt());
+        rawData.nextLine();
+        System.out.println("Please type Country Id of Departure");
+        this.setFlightCountryIdDep(rawData.nextInt());
+        rawData.nextLine();
+        System.out.println("Please type City Id of Departure");
+        this.setFlightCityIdDep(rawData.nextInt());
+        rawData.nextLine();
+        System.out.println("Please type Country Id of Arrive");
+        this.setFlightCountryIdArr(rawData.nextInt());
+        rawData.nextLine();
+        System.out.println("Please type City Id of Arrive");
+        this.setFlightCityIdArr(rawData.nextInt());
+        rawData.nextLine();
+        System.out.println("Please type Usder ID");
+        this.setUserId(rawData.nextInt());
+        rawData.nextLine();
         this.addData();
     }
 
@@ -144,7 +169,11 @@ public class Flight implements DataOperations {
         try{
             //just for testing purpose: System.out.println(this.getCountryId()+"-"+this.getCountryName()+"-"+this.getCountryCoords());
             localRecordCounter = String.valueOf(recordCounter++);
-            data.put(localRecordCounter, new Object[] {this.getCityId(), this.getCityName(), this.getCityCoords(), this.getCityId()});
+            data.put(localRecordCounter, new Object[] {this.getFlightId(), this.getFlightDescriptor(),
+                    this.getFlightDateTimeDep(), this.getFlightDateTimeArr(), this.getFlightStatus(),
+                    this.getFlightWeatherRpt(), this.getAircfratId(), this.getAirlineId(),
+                    this.getFlightCountryIdDep(), this.getFlightCityIdDep(), this.getFlightCountryIdArr(),
+                    this.getFlightCityIdArr(), this.getUserId()});
 
             //it is necesary to iterate the data to savbe it into a row
             Set<String> keyset = data.keySet();
@@ -166,7 +195,7 @@ public class Flight implements DataOperations {
                 }
             }
             //Write the workbook in file system
-            FileOutputStream out = new FileOutputStream(new File("city.xlsx"));
+            FileOutputStream out = new FileOutputStream(new File("flight.xlsx"));
             workbook.write(out);
             out.close();
             System.out.println("Your data is saved");
@@ -184,7 +213,7 @@ public class Flight implements DataOperations {
         boolean dataFound = false;
 
         try{
-            System.out.println("Displaying current list of countries");
+            System.out.println("Displaying current list of Flights");
             //searchData routine
             cellDataList = new ArrayList();
             rowIterator = sheet.rowIterator();
@@ -214,7 +243,7 @@ public class Flight implements DataOperations {
 
             //ask the user what other operation will need to execute
             if(dataFound){
-                System.out.println("please type City ID you wish to update:");
+                System.out.println("please type Flight ID you wish to update:");
                 entityTarget = rawData.nextInt();
                 System.out.println("Please type: 1->Edit Record, 2->Delete Record, 3->Back to Previous Menu");
                 updateRowOperation = rawData.nextInt();
