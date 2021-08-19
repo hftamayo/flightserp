@@ -1,7 +1,7 @@
 package sv.com.devskodigo;
 
 /*
-name: City.java
+name: Flight.java
 purpose: manage city catalog
 author: hftamayo
 comments:
@@ -20,8 +20,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 import java.util.*;
+import java.text.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,19 +32,20 @@ public class Flight implements DataOperations {
 
     private int menuOption;
     private Scanner rawData;
+    private String dtInput; //tempVar to get DateTimeInputData
 
     @Getter @Setter
     private int flightId;
     @Getter @Setter
     private String flightDescriptor;
     @Getter @Setter
-    private LocalDateTime flightDateTimeDep;
+    private Date flightDateTimeDep;
     @Getter @Setter
-    private LocalDateTime flightDateTimeArr;
+    private Date flightDateTimeArr;
     @Getter @Setter
     private int flightStatus;
     @Getter @Setter
-    private char flightWeatherRpt;
+    private String flightWeatherRpt;
     @Getter @Setter
     private int aircfratId;
     @Getter @Setter
@@ -93,49 +95,29 @@ public class Flight implements DataOperations {
 
     @Override
     public void selectOption(){
-        System.out.println("Flight dataset: please type a number equivalent to any of the options above: ");
-        int usrContinue = 1;
-        do{
-            System.out.println("1. Add a Record");
-            System.out.println("2. Display data");
-            System.out.println("3. Back to Previous Menu");
-
-            try{
-                menuOption = rawData.nextInt();
-                switch(menuOption){
-                    case 1:
-                        this.getData();
-                        break;
-                    case 2:
-                        this.searchData();
-                        break;
-                    case 3:
-                        usrContinue = 0;
-                        break;
-                }
-
-            }catch(InputMismatchException ime){
-                System.out.println("Please only type integer numbers");
-                ime.printStackTrace();
-            }
-        }while(usrContinue == 1);
 
     }//end of selectOption method
 
     @Override
     public void getData(){
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         System.out.println("Pleae type id");
         this.setFlightId(rawData.nextInt());
         //numeric input data does not send enter at the end
         rawData.nextLine();
         System.out.println("Please type Flight Descriptor");
         this.setFlightDescriptor(rawData.nextLine());
-        System.out.println("Please type Flight Date Time of Departure");
-        //this.setFlightDateTimeDep((LocalDateTime)rawData.next());
-        rawData.nextLine();
-        System.out.println("Please type Flight Date Time of Arrive");
-        //this.setFlightDateTimeDep((LocalDateTime)rawData.next());
-        rawData.nextLine();
+        try{
+            System.out.println("Please type Flight Date Time of Departure (yyy-mm-dd hh:mm)");
+            dtInput = rawData.nextLine();
+            this.setFlightDateTimeDep(ft.parse(dtInput));
+            System.out.println("Please type Flight Date Time of Arrive (yyy-mm-dd hh:mm)");
+            dtInput = rawData.nextLine();
+            this.setFlightDateTimeDep(ft.parse(dtInput));
+        }catch(ParseException pe){
+            System.out.println("an error ocurred during DateTime Input Data");
+            pe.printStackTrace();
+        }
         System.out.println("Please type Flight Status");
         this.setFlightStatus(rawData.nextInt());
         rawData.nextLine();
@@ -160,6 +142,8 @@ public class Flight implements DataOperations {
         System.out.println("Please type Usder ID");
         this.setUserId(rawData.nextInt());
         rawData.nextLine();
+        this.setFlightWeatherRpt(this.getWeatherRpt);
+        
         this.addData();
     }
 
@@ -190,8 +174,8 @@ public class Flight implements DataOperations {
                         cell.setCellValue((String)obj);
                     else if(obj instanceof Integer) //countryid and cityid
                         cell.setCellValue((Integer)obj);
-                    else if(obj instanceof Float) //float
-                        cell.setCellValue((Float)obj);
+                    else if(obj instanceof Date) //dateTimeDeparture
+                        cell.setCellValue((Date)obj);
                 }
             }
             //Write the workbook in file system
@@ -242,6 +226,7 @@ public class Flight implements DataOperations {
             }
 
             //ask the user what other operation will need to execute
+            /*
             if(dataFound){
                 System.out.println("please type Flight ID you wish to update:");
                 entityTarget = rawData.nextInt();
@@ -259,6 +244,8 @@ public class Flight implements DataOperations {
                         break;
                 }//end of switch(usrOpt)
             }//end of dataFound
+
+             */
         }catch(Exception e){
             System.out.println("An error ocurred");
         }
@@ -280,5 +267,10 @@ public class Flight implements DataOperations {
     @Override
     public void updateStatus(int recordId){
 
+    }
+
+    public void getWeatherRpt(){
+        WeatherAPI weatherapi = new WeatherAPI();
+        weatherapi.getForecast();
     }
 }
