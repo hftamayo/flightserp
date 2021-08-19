@@ -158,7 +158,7 @@ public class Country implements DataOperations {
 
     @Override
     public void searchData(){
-        int countryTarget;
+        int entityTarget;
         int updateRowOperation = 0;
         boolean dataFound = false;
 
@@ -194,16 +194,16 @@ public class Country implements DataOperations {
             //ask the user what other operation will need to execute
             if(dataFound){
                 System.out.println("please type Country ID you wish to update:");
-                countryTarget = rawData.nextInt();
+                entityTarget = rawData.nextInt();
                 System.out.println("Please type: 1->Edit Record, 2->Delete Record, 3->Back to PRevious Menu");
                 updateRowOperation = rawData.nextInt();
 
                 switch(updateRowOperation){
                     case 1: //updateData
-                        this.updateData(countryTarget);
+                        this.updateData(entityTarget);
                         break;
                     case 2: //deleteData
-                        this.deleteData(countryTarget);
+                        this.deleteData(entityTarget);
                         break;
                     case 3:
                         break;

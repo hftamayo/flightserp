@@ -20,25 +20,44 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class City implements DataOperations {
+public class Flight implements DataOperations {
 
     private int menuOption;
     private Scanner rawData;
 
     @Getter @Setter
-    private int cityId;
+    private int flightId;
     @Getter @Setter
-    private String cityName;
+    private int flightDescriptor;
     @Getter @Setter
-    private float cityCoords;
+    private LocalDateTime flightDateTimeRep;
     @Getter @Setter
-    private int countryId;
+    private LocalDateTime flightDateTimeArr;
+    @Getter @Setter
+    private int flightStatus;
+    @Getter @Setter
+    private char flightWeatherRpt;
+    @Getter @Setter
+    private int aircfratId;
+    @Getter @Setter
+    private int airlineId;
+    @Getter @Setter
+    private int flightCountryIdDep;
+    @Getter @Setter
+    private int flightCityIdDep;
+    @Getter @Setter
+    private int flightCountryIdArr;
+    @Getter @Setter
+    private int flightCityIdArr;
+    @Getter @Setter
+    private int userId;
 
     XSSFWorkbook workbook;
     XSSFSheet sheet;
@@ -48,9 +67,8 @@ public class City implements DataOperations {
     Iterator rowIterator;
 
     //constructor method
-    public City(){
-        readDataset();
-        selectOption();
+    public Flight(){
+
     }
 
     //open dataset
@@ -61,9 +79,11 @@ public class City implements DataOperations {
         rawData = new Scanner(System.in);
         try{
             workbook = new XSSFWorkbook();
-            sheet = workbook.createSheet("City");
+            sheet = workbook.createSheet("Flight");
             data = new TreeMap<String, Object[]>();
-            data.put("1", new Object[] {"ID", "CITY_NAME", "GPS_COORDS", "COUNTRY_ID"});
+            data.put("1", new Object[] {"ID", "DESCRIPTOR", "DT DEPARTURE", "DT ARRIVE", "STATUS",
+                    "WEATHER RPT", "AIRCRAFT", "AIRLINE", "COUNTRY DEP", "CITY DEP", "COUNTRY ARR",
+                    "CITY ARR", "USER"});
             System.out.println("City dataset loaded");
         }catch(Exception ioe){
             System.out.println("Error during reading dataset routine");

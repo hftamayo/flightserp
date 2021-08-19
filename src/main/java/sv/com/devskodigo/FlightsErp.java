@@ -22,7 +22,7 @@ public class FlightsErp {
     public static void showSubMenu(int mnu){
         int subMenuOption = 0;
         switch(mnu){
-            case 1:
+            case 1: //catalogs
                 int menu1 = 1;
                 do{
                     System.out.println("Catalogs: SubMenu Options");
@@ -60,33 +60,61 @@ public class FlightsErp {
 
                 break;
 
-            case 2:
-                System.out.println("1. Add a Flight");
-                System.out.println("2. Search a Flight");
-                System.out.println("3. update Flight's Status");
-                subMenuOption = rawData.nextInt();
-                switch (subMenuOption){
-                    case 1:
-                        //TODO
-                        break;
-                }//end of flight submenu options
+            case 2: //flights operations
+                int menu2 = 1;
+                do{
+                    System.out.println("Flights: SubMenu Options");
+                    System.out.println("Please type the number related to each submenu");
+                    System.out.println("1. Add a Flight");
+                    System.out.println("2. Search a Flight");
+                    System.out.println("3. Back to Main Menu");
+
+                    subMenuOption = rawData.nextInt();
+
+                    switch(subMenuOption){
+                        case 1:
+                            Flight f1 = new Flight();
+                            f1.addData();
+                            break;
+                        case 2:
+                            Flight f2 = new Flight();
+                            f2.searchData();
+                            break;
+                        case 3:
+                            menu2 = 0;
+                            break;
+                    }//end of catalog submenu options
+                }while(menu2 == 1);
+
                 break;
 
-            case 3:
-                System.out.println("1. Add a Report");
-                System.out.println("2. Send Report");
-                System.out.println("3. update Report's Status");
-                subMenuOption = rawData.nextInt();
-                switch (subMenuOption){
-                    case 1:
-                        ReportSummary reportSummary = new ReportSummary();
-                        break;
-                    case 2:
-                        //TODO
-                        break;
-                } //end of report submenu options
+            case 3: //reports
+                int menu3 = 1;
+                do{
+                    System.out.println("Reports: SubMenu Options");
+                    System.out.println("Please type the number related to each submenu");
+                    System.out.println("1. Add a Report");
+                    System.out.println("2. Search Report");
+                    System.out.println("4. Back to Main Menu");
+
+                    subMenuOption = rawData.nextInt();
+
+                    switch(subMenuOption){
+                        case 1:
+                            ReportSummary rpt1 = new ReportSummary();
+                            rpt1.addData();
+                            break;
+                        case 2:
+                            ReportSummary rpt2 = new ReportSummary();
+                            rpt2.addData();
+                            break;
+                        case 3:
+                            menu3 = 0;
+                            break;
+                    }//end of catalog submenu options
+                }while(menu3 == 1);
                 break;
-        }//end of first switch loop
+        }//end of mnu switch loop
     }//end of showSubMenu method
 
     public static void main(String[] args){
