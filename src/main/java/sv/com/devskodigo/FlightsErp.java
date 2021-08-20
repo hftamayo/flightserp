@@ -74,7 +74,7 @@ public class FlightsErp {
                     switch(subMenuOption){
                         case 1:
                             Flight f1 = new Flight();
-                            f1.addData();
+                            f1.getData();
                             break;
                         case 2:
                             Flight f2 = new Flight();

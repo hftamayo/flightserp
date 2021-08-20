@@ -19,8 +19,8 @@ public class WeatherAPI {
         return map;
     }
 
-    public void getForecast() {
-        String forecast;
+    public String getForecast() {
+        String forecast = "";
         String API_KEY = "3d533f0959fa1f766ffbd587fccfbaca";
         String LOCATION = "La%20Paz,sv";
         String urlString = "https://api.openweathermap.org/data/2.5/weather?q="+LOCATION+"&appid="+API_KEY+"&units=metric";
@@ -42,12 +42,12 @@ public class WeatherAPI {
             //System.out.println("Current Temperature: "+ mainMap.get("temp")+ "ºC");
             //System.out.println("Current Humidity: "+ mainMap.get("humidity")+ "%");
             
-            forecast = MainMap.get("temp").toString()+"°C, "+ MainMap.get("humidity")+"%";
-            System.out.println(forecast);
-            //return forecast;
+            forecast = mainMap.get("temp").toString()+"°C, "+ mainMap.get("humidity")+"%";
+            //System.out.println(forecast);
 
         }catch(Exception error){
             System.out.println("error.getMessage() = " + error.getMessage());
         }
+        return forecast;
     }
 }

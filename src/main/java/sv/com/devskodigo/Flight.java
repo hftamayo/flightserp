@@ -64,13 +64,13 @@ public class Flight implements DataOperations {
     XSSFWorkbook workbook;
     XSSFSheet sheet;
     Map<String, Object[]> data;
-    int recordCounter = 1; //1 is Spreadsheet's Header
+    int recordCounter; //1 is Spreadsheet's Header
     List cellDataList;
     Iterator rowIterator;
 
     //constructor method
     public Flight(){
-
+        recordCounter = 1; //1 is Spreadsheet's Header
     }
 
     //open dataset
@@ -100,6 +100,8 @@ public class Flight implements DataOperations {
 
     @Override
     public void getData(){
+        recordCounter++;
+        this.readDataset();
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         System.out.println("Pleae type id");
         this.setFlightId(rawData.nextInt());
@@ -108,17 +110,17 @@ public class Flight implements DataOperations {
         System.out.println("Please type Flight Descriptor");
         this.setFlightDescriptor(rawData.nextLine());
         try{
-            System.out.println("Please type Flight Date Time of Departure (yyy-mm-dd hh:mm)");
+            System.out.println("Please type Flight Date Time of Departure (yyyy-mm-dd hh:mm)");
             dtInput = rawData.nextLine();
             this.setFlightDateTimeDep(ft.parse(dtInput));
-            System.out.println("Please type Flight Date Time of Arrive (yyy-mm-dd hh:mm)");
+            System.out.println("Please type Flight Date Time of Arrive (yyyy-mm-dd hh:mm)");
             dtInput = rawData.nextLine();
             this.setFlightDateTimeDep(ft.parse(dtInput));
         }catch(ParseException pe){
             System.out.println("an error ocurred during DateTime Input Data");
             pe.printStackTrace();
         }
-        System.out.println("Please type Flight Status");
+        System.out.println("Please type Flight Status(0->Cancelled, 1->OnTime, 2->Delayed");
         this.setFlightStatus(rawData.nextInt());
         rawData.nextLine();
         System.out.println("Please type Aircraft id");
@@ -142,7 +144,7 @@ public class Flight implements DataOperations {
         System.out.println("Please type Usder ID");
         this.setUserId(rawData.nextInt());
         rawData.nextLine();
-        this.setFlightWeatherRpt(this.getWeatherRpt);
+        this.setFlightWeatherRpt(this.getWeatherRpt());
         
         this.addData();
     }
@@ -151,6 +153,7 @@ public class Flight implements DataOperations {
     public void addData(){
         String localRecordCounter;
         try{
+
             //just for testing purpose: System.out.println(this.getCountryId()+"-"+this.getCountryName()+"-"+this.getCountryCoords());
             localRecordCounter = String.valueOf(recordCounter++);
             data.put(localRecordCounter, new Object[] {this.getFlightId(), this.getFlightDescriptor(),
@@ -269,8 +272,10 @@ public class Flight implements DataOperations {
 
     }
 
-    public void getWeatherRpt(){
+    public String getWeatherRpt(){
+        String rptWeather;
         WeatherAPI weatherapi = new WeatherAPI();
-        weatherapi.getForecast();
+        rptWeather = weatherapi.getForecast();
+        return rptWeather;
     }
 }
