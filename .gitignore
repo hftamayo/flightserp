@@ -1,3 +1,8 @@
 *.class
 *.xlsx
 target/classes
+/.classpath
+/.factorypath
+/.project
+/.settings
+/.idea
