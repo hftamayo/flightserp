@@ -11,6 +11,7 @@ TODO:
 3. if the xlsx exist then open it instead of create it again
  */
 
+import sv.com.devskodigo.services.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.FileWriter;
@@ -95,6 +96,7 @@ public class FlightsErp {
                     System.out.println("Please type the number related to each submenu");
                     System.out.println("1. Add a Report");
                     System.out.println("2. Search Report");
+                    System.out.println("3. Send Report to Email Recipient");
                     System.out.println("4. Back to Main Menu");
 
                     subMenuOption = rawData.nextInt();
@@ -109,6 +111,10 @@ public class FlightsErp {
                             rpt2.addData();
                             break;
                         case 3:
+                            EmailSender emailSender = new EmailSender();
+                            emailSender.sendMessage();
+                            break;
+                        case 4:
                             menu3 = 0;
                             break;
                     }//end of catalog submenu options
