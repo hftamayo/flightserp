@@ -1,5 +1,10 @@
 package sv.com.devskodigo.services;
 
+import lombok.Getter;
+
+import java.util.*;
+import javax.mail.*;
+
 public class EmailSender extends PrivateEmailInformation {
     @Getter
     private String ownEmail;
