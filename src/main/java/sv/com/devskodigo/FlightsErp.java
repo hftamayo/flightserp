@@ -5,70 +5,54 @@ purpose:
 project's main class, it's the pipeline for submenu and execute a requested class
 create an XLSX during first run
 author: hftamayo
-TODO:
-1. clean the screen fuction -> OS independent
-2. loop back to main menu
-3. if the xlsx exist then open it instead of create it again
  */
 
 
 import sv.com.devskodigo.view.menu.*;
 
 
-import java.util.InputMismatchException;
-
-import java.io.FileWriter;
-import java.io.IOException;
+import java.util.Scanner;
 
 public class FlightsErp {
 
     public static void main(String[] args){
-        /*
-        int decisionMenu = 0;
-        int decisionSubMenu = 0;
-        int decisionAction = 0;
 
-        System.out.println("Welcome to Flights ERP - Comalapa Airport");
-        ViewMenu viewMenu = new ViewMenu();
-        viewMenu.showMainMenu();
-        decisionMenu = viewMenu.selectOption(1);
-        switch(decisionMenu){
-            case 1: //catalogs
-                viewMenu.showSubMenu(1);
-                decisionAction = viewmenu
+        int userMenuChosen = 0;
 
-         */
+        System.out.println("Welcome to the Airport, please choose one of the bellow options:");
 
-        }
+        MenuComponent catalogs = new Menu("Catalogs", "");
+        MenuComponent flights = new Menu("Flights Operations", "");
+        MenuComponent exit = new Menu("Active Session", "");
 
-        /*
-        do{
-            System.out.println("Main Menu: please type the number related to one of the above options: ");
-            System.out.println("1. Catalogs");
-            System.out.println("2. Flight Operations");
-            System.out.println("3. Reports");
-            System.out.println("4. Exit");
+        catalogs.add(new MenuItem("Users", "1"));
+        catalogs.add(new MenuItem("Country", "2"));
+        catalogs.add(new MenuItem("City", "3"));
+        catalogs.add(new MenuItem("Airline", "4"));
+        catalogs.add(new MenuItem("Aircraft", "5"));
 
-            try{
-                menuOption = rawData.nextInt();
-                switch(menuOption){
-                    case 1:
-                    case 2:
-                    case 3:
-                        showSubMenu(menuOption);
-                        break;
-                    default:
-                        System.out.println("thank you for use our product. Good bye");
-                        mainMenu = 0;
-                        break;
-                }//end of switch
-            }catch(InputMismatchException ime){
-                System.out.println("Please type only integer numbers");
-                ime.printStackTrace();
-            }
-        }while(mainMenu == 1);
-         */
+        flights.add(new MenuItem("Flights", "6"));
+        flights.add(new MenuItem("Reports", "7"));
 
+        exit.add(new MenuItem("Exit", "8"));
+
+        catalogs.displayMenu();
+        System.out.println("--------------------");
+        System.out.println();
+
+        flights.displayMenu();
+        System.out.println("--------------------");
+        System.out.println();
+
+        exit.displayMenu();
+
+        Scanner rawData = new Scanner(System.in);
+        System.out.println("Please type your option:");
+        userMenuChosen = rawData.nextInt();
+        rawData.close();
+
+        MenuItemAction menuaction = new MenuItemAction(userMenuChosen, 8);
+        menuaction.executeOption();
     }//end of main
 }
 

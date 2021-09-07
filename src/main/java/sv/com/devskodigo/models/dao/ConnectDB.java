@@ -1,20 +1,31 @@
 package sv.com.devskodigo.models.dao;
 
+import java.io.FileInputStream;
 import java.sql.*;
+import java.util.Properties;
 
-    class ConnectDB{
+class ConnectDB{
     public static void main(String args[]){
-    try{
-    Class.forName("com.mysql.jdbc.Driver");
-    Connection con=DriverManager.getConnection(
-    //url/database, username, password
-    "jdbc:mysql://localhost:3306/flights","flights","Java123$");
+        Properties properties = new Properties();
+        String filePath = "/src/main/java/sv/com/devskodigo/models/dao/flights.properties";
 
-    Statement stmt=con.createStatement();
-    ResultSet rs=stmt.executeQuery("SELECT countryName, countryCoords FROM country");
-    while(rs.next())
-    System.out.println(rs.getString(1)+"  "+rs.getString(2);
-    con.close();
-    }catch(Exception e){ System.out.println(e);}
+        try{
+            FileInputStream fis = new FileInputStream(filePath);
+            properties.load(fis);
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //url/database, username, password
+            /*
+            Connection con=DriverManager.getConnection(,"","");
+
+            Statement stmt=con.createStatement();
+            ResultSet rs=stmt.executeQuery("SELECT countryName, countryCoords FROM country");
+            while(rs.next()){
+                System.out.println(rs.getString(1)+"  "+rs.getString(2));
+            }
+            con.close();
+
+             */
+        }catch(Exception e){ System.out.println(e);}
     }
-    }
+}
