@@ -1,4 +1,4 @@
-package sv.com.devskodigo.controller;
+package sv.com.devskodigo.models.dao;
 
 
 import java.sql.Connection;
