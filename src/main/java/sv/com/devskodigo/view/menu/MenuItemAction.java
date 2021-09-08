@@ -5,17 +5,19 @@ public class MenuItemAction {
     private int userOption = 0;
     private int maxValue = 0;
 
-    public MenuItemAction(int uo, int mv){
-        this.userOption = uo;
-        this.maxValue = mv;
+    public MenuItemAction(){
+
     }
 
-    public void executeOption(){
-        if(this.userOption < 1 || this.userOption > this.maxValue){
+    public void executeAction(int uo, int mv){
+        userOption = uo;
+        maxValue = mv;
+        if(userOption < 1 || userOption > maxValue){
             System.out.println("Invalid option, please try again");
         }
         else{
-            switch(this.userOption){
+
+            switch(userOption){
                 case 1:
                     //USER CRUD
                     System.out.println("please instantiate USER");
@@ -45,7 +47,7 @@ public class MenuItemAction {
                     System.out.println("please instantiate REPORTS");
                     break;
                 case 8:
-                    //EXIT CRUD
+                    //EXIT
                     System.out.println("Thank you for use our services!");
                     System.exit(0);
                     break;
