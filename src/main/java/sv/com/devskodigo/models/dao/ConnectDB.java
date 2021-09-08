@@ -1,5 +1,7 @@
 package sv.com.devskodigo.models.dao;
-
+/*
+pendiente de documentar
+ */
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
