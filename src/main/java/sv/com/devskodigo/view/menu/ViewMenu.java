@@ -6,8 +6,12 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ViewMenu {
-    private int userInputOption = 0;
+    private int modelOption = 0;
+    private int crudAction = 0;
     private int userContinue = 1;
+
+    private final int MENU_MAX_VALUE = 8; //equivalent to max menu options
+
     MenuComponent catalogs;
     MenuComponent flights;
     MenuComponent exit;
@@ -29,26 +33,54 @@ public class ViewMenu {
         exit.add(new MenuItem("Exit   ", "8"));
     }
 
+    public void displayMenu(){
+        catalogs.displayMenu();
+        System.out.println("--------------------");
+        System.out.println();
+
+        flights.displayMenu();
+        System.out.println("--------------------");
+        System.out.println();
+
+        exit.displayMenu();
+    }
+
+    public void displayCrudMenu(){
+        System.out.println("================");
+        System.out.println("Insert a Record -> 1");
+        System.out.println("Display Records -> 2");
+        System.out.println("Delete a Record -> 3");
+        System.out.println("Update a Record -> 4");
+        System.out.println("================");
+    }
+
     public void runMenu(){
         do{
-            catalogs.displayMenu();
-            System.out.println("--------------------");
-            System.out.println();
-
-            flights.displayMenu();
-            System.out.println("--------------------");
-            System.out.println();
-
-            exit.displayMenu();
+            this.displayMenu();
 
             try{
                 Scanner rawData = new Scanner(System.in);
 
                 System.out.println("Please type your option:");
-                userInputOption = rawData.nextInt();
+                modelOption = rawData.nextInt();
+                if(modelOption < 1 || modelOption > MENU_MAX_VALUE) {
+                    System.out.println("Invalid option, please try again");
+                }else if(modelOption == 8){
+                    System.exit(0);
+                }
+                else {
+                    this.displayCrudMenu();
+                    System.out.println("Please type of the above data action:");
+                    crudAction = rawData.nextInt();
+                    if(crudAction < 1 || crudAction > 4) {
+                        System.out.println("Invalid option, please try again");
+                    }
+                    else{
+                        MenuItemAction menuItemAction = new MenuItemAction();
+                        menuItemAction.executeAction(modelOption, crudAction);
+                    }
+                }
 
-                MenuItemAction menuItemAction = new MenuItemAction();
-                menuItemAction.executeAction(userInputOption, 8);
 
                 System.out.println("Would you like to continue? 1->Yes, 0->No: ");
                 userContinue = rawData.nextInt();

@@ -1,65 +1,55 @@
 package sv.com.devskodigo.services;
 
-import sv.com.devskodigo.view.menu.CrudMenu;
+import sv.com.devskodigo.view.ViewCountry;
 
 public class MenuItemAction {
-
-    private int userOption = 0;
-    private int maxValue = 0;
+    private int modelUserChosen = 0;
+    private int crudActionChosen = 0;
 
     public MenuItemAction(){
 
     }
 
-    public void executeAction(int uo, int mv){
-        userOption = uo;
-        maxValue = mv;
-        String crudAction = "";
+    public void executeAction(int mo, int co){
+        modelUserChosen = mo;
+        crudActionChosen = co;
 
-        if(userOption < 1 || userOption > maxValue){
-            System.out.println("Invalid option, please try again");
+
+        switch(modelUserChosen){
+            case 1:
+                //USER CRUD
+
+                break;
+            case 2:
+                //COUNTRY CRUD
+                ViewCountry viewCountry = new ViewCountry(co);
+                break;
+            case 3:
+                //CITY CRUD
+                ViewCity viewCity = new ViewCity(co);
+                break;
+            case 4:
+                //AIRLINE CRUD
+                ViewAirline viewAirline = new ViewAirline(co);
+                break;
+            case 5:
+                //AIRCRAFT CRUD
+                ViewAircraft viewAircraft = new ViewAircraft(co);
+                break;
+            case 6:
+                //FLIGHTS CRUD
+                ViewFlights viewFlights = new ViewFlights(co);
+                break;
+            case 7:
+                //REPORTS CRUD
+                ViewReports viewReports = new ViewReports(co);
+                break;
+            case 8:
+                //EXIT
+                System.out.println("Thank you for use our services!");
+                System.exit(0);
+                break;
         }
-        else{
 
-            switch(userOption){
-                case 1:
-                    //USER CRUD
-                    dtoName = "User";
-                    break;
-                case 2:
-                    //COUNTRY CRUD
-                    dtoName = "Country";
-                    break;
-                case 3:
-                    //CITY CRUD
-                    System.out.println("please instantiate CITY");
-                    break;
-                case 4:
-                    //AIRLINE CRUD
-                    System.out.println("please instantiate AIRLINE");
-                    break;
-                case 5:
-                    //AIRCRAFT CRUD
-                    System.out.println("please instantiate AIRCRAFT");
-                    break;
-                case 6:
-                    //FLIGHTS CRUD
-                    System.out.println("please instantiate FLIGHTS");
-                    break;
-                case 7:
-                    //REPORTS CRUD
-                    System.out.println("please instantiate REPORTS");
-                    break;
-                case 8:
-                    //EXIT
-                    System.out.println("Thank you for use our services!");
-                    System.exit(0);
-                    break;
-            }
-            CrudMenu crudMenu = new CrudMenu();
-            crudMenu.showCrudOptions();
-
-
-        }//end of else
     }//end of executeOption
 }
