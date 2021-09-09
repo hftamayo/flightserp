@@ -1,4 +1,4 @@
-package sv.com.devskodigo.view.menu;
+package sv.com.devskodigo.services;
 
 public class MenuItemAction {
 
