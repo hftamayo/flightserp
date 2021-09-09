@@ -1,4 +1,4 @@
-package sv.com.devskodigo.services;
+package sv.com.devskodigo.email;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Email {
     private Address[] to;
-    private Multipart content;
-    private MimeMessage message;
+    private final Multipart content;
+    private final MimeMessage message;
     public Email(Session session) {
         message = new MimeMessage(session);
         content = new MimeMultipart();
@@ -23,6 +23,7 @@ public class Email {
         }
         message.addRecipients(Message.RecipientType.TO, to);
     }
+
     public void setFrom(String from) throws MessagingException{
         message.setFrom(new InternetAddress(from));
     }

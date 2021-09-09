@@ -1,15 +1,16 @@
-package sv.com.devskodigo.services;
+package sv.com.devskodigo.email;
+
 
 import lombok.Getter;
 
 import java.util.*;
 import javax.mail.*;
 
-public class EmailSender extends PrivateEmailInformation {
+public class EmailSender extends PrivateEmailInformation{
     @Getter
-    private String ownEmail;
-    private Properties properties;
-    private String host;
+    private final String ownEmail;
+    private final Properties properties;
+    private final String host;
 
     public EmailSender() {
         // Sender's email ID needs to be mentioned
@@ -33,7 +34,7 @@ public class EmailSender extends PrivateEmailInformation {
         });
     }
 
-    public void sendMessage() {
+    public static void main(String[] args) {
         // Recipient's email ID needs to be mentioned.
         EmailSender emailSender = new EmailSender();
         Session session = emailSender.getSession();
@@ -55,5 +56,4 @@ public class EmailSender extends PrivateEmailInformation {
             mex.printStackTrace();
         }
     }
-
 }
