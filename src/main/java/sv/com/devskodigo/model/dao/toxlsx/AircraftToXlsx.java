@@ -10,7 +10,7 @@ import sv.com.devskodigo.model.dto.AircraftDto;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.*;
-
+/*
 public class AircraftToXlsx implements DataOperations<AircraftDto> {
     private int menuOption;
     private Scanner rawData = new Scanner(System.in);
@@ -135,3 +135,4 @@ public class AircraftToXlsx implements DataOperations<AircraftDto> {
 
     }
 }
+*/

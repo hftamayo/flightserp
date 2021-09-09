@@ -14,7 +14,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+/*
 public class ReportDetailToXlsx implements DataOperations<ReportDetailDto> {
     private final String filePath = "ReportDetails.xlsx";
     private final Object[] header = new Object[]{"ID", "DateTime", "Classification", "Description", "Report"};
@@ -96,6 +96,7 @@ public class ReportDetailToXlsx implements DataOperations<ReportDetailDto> {
                                 report.getReportSummary()});
             }*/
             //it is necessary to iterate the data to sabe it into a row
+/*
             int rownum = 0;
             Set<String> keyset = data.keySet();
             for (String key : keyset) {
@@ -230,3 +231,4 @@ public class ReportDetailToXlsx implements DataOperations<ReportDetailDto> {
         return reports;
     }
 }
+*/

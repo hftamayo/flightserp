@@ -1,5 +1,7 @@
 package sv.com.devskodigo.services;
 
+import sv.com.devskodigo.view.menu.CrudMenu;
+
 public class MenuItemAction {
 
     private int userOption = 0;
@@ -12,6 +14,8 @@ public class MenuItemAction {
     public void executeAction(int uo, int mv){
         userOption = uo;
         maxValue = mv;
+        String crudAction = "";
+
         if(userOption < 1 || userOption > maxValue){
             System.out.println("Invalid option, please try again");
         }
@@ -20,11 +24,11 @@ public class MenuItemAction {
             switch(userOption){
                 case 1:
                     //USER CRUD
-                    System.out.println("please instantiate USER");
+                    dtoName = "User";
                     break;
                 case 2:
                     //COUNTRY CRUD
-                    System.out.println("please instantiate COUNTRY");
+                    dtoName = "Country";
                     break;
                 case 3:
                     //CITY CRUD
@@ -52,6 +56,10 @@ public class MenuItemAction {
                     System.exit(0);
                     break;
             }
+            CrudMenu crudMenu = new CrudMenu();
+            crudMenu.showCrudOptions();
+
+
         }//end of else
     }//end of executeOption
 }

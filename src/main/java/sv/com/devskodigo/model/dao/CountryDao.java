@@ -14,12 +14,15 @@ public class CountryDao extends DbConnection
     private static final String COUNTRY_NAME = "country_name";
     private static final String COUNTRY_COORDINATES = "country_coordinates";
 
+/*
     public static void main(String[] args) {
         CountryDao countryDao = new CountryDao();
         countryDao.insert(new CountryDto(0, "España", 205));
         for (var c : countryDao.getList())
             System.out.println(c);
     }
+
+ */
 
     @Override
     public List<CountryDto> getList() {

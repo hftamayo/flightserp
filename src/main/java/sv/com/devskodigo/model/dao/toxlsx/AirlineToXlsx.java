@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.*;
 
+/*
 public class AirlineToXlsx implements DataOperations<AirlineDto> {
     private int menuOption;
     private Scanner rawData = new Scanner(System.in);
@@ -135,3 +136,4 @@ public class AirlineToXlsx implements DataOperations<AirlineDto> {
 
     }
 }
+*/
