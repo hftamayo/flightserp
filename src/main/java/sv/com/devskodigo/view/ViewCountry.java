@@ -10,6 +10,7 @@ public class ViewCountry {
     private float countryCoords = 0;
     private Scanner rawData;
     private int requestedAction;
+    private int targetId = 0;
     private CountryDto country;
 
     public ViewCountry(int ra){
@@ -21,8 +22,8 @@ public class ViewCountry {
     public void crudPipeline(){
         switch(requestedAction){
             case 1: //insert
-                this.getData(0);
-                this.setData();
+                this.getData();
+                this.saveData();
                 break;
 
             case 2://display
@@ -30,37 +31,33 @@ public class ViewCountry {
                 break;
 
             case 3: //delete
-                int idDelete = this.searchData();
-                if(idDelete > 0){
-                    this.deleteData(idDelete);
+                targetId = this.searchData();
+                if(targetId > 0){
+                    this.deleteData(targetId);
                 }
                 break;
 
             case 4: //update
-                int idUpdate = this.searchData();
-                if(idUpdate > 0){
-                    this.updateData(idUpdate);
+                targetId = this.searchData();
+                if(targetId > 0){
+                    this.getData();
+                    this.updateData(targetId);
                 }
                 break;
         }
     }
 
-    public void getData(int status){
+    public void getData(){
         rawData = new Scanner(System.in);
-        if(status == 0){ //insert a record
-            System.out.println("Please type the below requested information: ");
-            System.out.println("Country's name");
-            countryName = rawData.nextLine();
-            System.out.println("Country's GPS Coords");
-            countryCoords = rawData.nextFloat();
-        }
-        else{ //updating data
-
-        }
+        System.out.println("Please type the below requested information: ");
+        System.out.println("Country's name");
+        countryName = rawData.nextLine();
+        System.out.println("Country's GPS Coords");
+        countryCoords = rawData.nextFloat();
 
     }
 
-    public void setData(){
+    public void saveData(){
         CountryDao countryDao =  new CountryDao();
         countryDao.insert(new CountryDto(0, this.countryName, this.countryCoords));
     }
@@ -95,12 +92,14 @@ public class ViewCountry {
 
     public void deleteData(int id){
         CountryDao countryDao = new CountryDao();
-        countryDao.
+        countryDao.delete(new CountryDto(0, "", 0), id);
         System.out.println("Record deleted");
 
     }
 
     public void updateData(int id){
+        CountryDao countryDao = new CountryDao();
+        countryDao.update(new CountryDto(0, this.countryName, this.countryCoords), id);
         System.out.println("Record updated");
 
     }

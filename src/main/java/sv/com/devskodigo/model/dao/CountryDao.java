@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CountryDao extends DbConnection
-        implements IInsert<CountryDto>, IUpdate<CountryDto>, IRead<CountryDto, Integer> {
+        implements IInsert<CountryDto>, IUpdate<CountryDto>, IRead<CountryDto, Integer>, IDelete<CountryDto> {
     private static final String TABLE_NAME = "country";
     //Column names
     private static final String COUNTRY_ID = "country_id";
@@ -136,5 +136,30 @@ public class CountryDao extends DbConnection
                 }
             }
         }
-    }
+    } //end of update
+
+    @Override
+    public void delete(CountryDto t){
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            String query = "DELETE FROM %s WHERE %s = ?"
+                    .formatted(TABLE_NAME, COUNTRY_ID);
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, t.getCountryId());
+
+            preparedStmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }//end of delete
 }

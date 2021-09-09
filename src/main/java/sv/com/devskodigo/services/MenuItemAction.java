@@ -26,23 +26,23 @@ public class MenuItemAction {
                 break;
             case 3:
                 //CITY CRUD
-                ViewCity viewCity = new ViewCity(co);
+                //ViewCity viewCity = new ViewCity(co);
                 break;
             case 4:
                 //AIRLINE CRUD
-                ViewAirline viewAirline = new ViewAirline(co);
+                //ViewAirline viewAirline = new ViewAirline(co);
                 break;
             case 5:
                 //AIRCRAFT CRUD
-                ViewAircraft viewAircraft = new ViewAircraft(co);
+                //ViewAircraft viewAircraft = new ViewAircraft(co);
                 break;
             case 6:
                 //FLIGHTS CRUD
-                ViewFlights viewFlights = new ViewFlights(co);
+                //ViewFlights viewFlights = new ViewFlights(co);
                 break;
             case 7:
                 //REPORTS CRUD
-                ViewReports viewReports = new ViewReports(co);
+                //ViewReports viewReports = new ViewReports(co);
                 break;
             case 8:
                 //EXIT
