@@ -7,22 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CountryDao extends DbConnection
-        implements IInsert<CountryDto>, IUpdate<CountryDto>, IRead<CountryDto, Integer>, IDelete<CountryDto> {
+        implements IInsert<CountryDto>, IUpdate<CountryDto>, IRead<CountryDto, Integer>, IDelete<Integer> {
     private static final String TABLE_NAME = "country";
     //Column names
     private static final String COUNTRY_ID = "country_id";
     private static final String COUNTRY_NAME = "country_name";
     private static final String COUNTRY_COORDINATES = "country_coordinates";
-
-/*
-    public static void main(String[] args) {
-        CountryDao countryDao = new CountryDao();
-        countryDao.insert(new CountryDto(0, "España", 205));
-        for (var c : countryDao.getList())
-            System.out.println(c);
-    }
-
- */
 
     @Override
     public List<CountryDto> getList() {
@@ -139,7 +129,7 @@ public class CountryDao extends DbConnection
     } //end of update
 
     @Override
-    public void delete(CountryDto t){
+    public void delete(Integer idTarget){
         Connection conn = null;
         try {
             conn = getConnection();
@@ -147,7 +137,7 @@ public class CountryDao extends DbConnection
                     .formatted(TABLE_NAME, COUNTRY_ID);
 
             PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, t.getCountryId());
+            preparedStmt.setInt(1, idTarget);
 
             preparedStmt.executeUpdate();
         } catch (SQLException e) {

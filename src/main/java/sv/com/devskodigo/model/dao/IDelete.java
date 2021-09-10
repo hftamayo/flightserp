@@ -1,5 +1,5 @@
 package sv.com.devskodigo.model.dao;
 
-public interface IDelete<T> {
-    void delete(T t);
+public interface IDelete<Id> {
+    void delete(Id id);
 }

@@ -1,6 +1,6 @@
 package sv.com.devskodigo.services;
 
-import sv.com.devskodigo.view.ViewCountry;
+import sv.com.devskodigo.controller.CountryController;
 
 public class MenuItemAction {
     private int modelUserChosen = 0;
@@ -22,7 +22,7 @@ public class MenuItemAction {
                 break;
             case 2:
                 //COUNTRY CRUD
-                ViewCountry viewCountry = new ViewCountry(co);
+                CountryController countryController = new CountryController(co);
                 break;
             case 3:
                 //CITY CRUD

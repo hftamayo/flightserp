@@ -1,8 +1,7 @@
 package sv.com.devskodigo.view.menu;
 
 import org.junit.Test;
-import org.junit.Assert;
-import sv.com.devskodigo.view.menu.ViewMenu;
+import sv.com.devskodigo.view.ViewMenu;
 
 public class ViewMenuTest {
     @Test

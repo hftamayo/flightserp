@@ -1,11 +1,11 @@
-package sv.com.devskodigo.view;
+package sv.com.devskodigo.controller;
 
 import sv.com.devskodigo.model.dao.CountryDao;
 import sv.com.devskodigo.model.dto.CountryDto;
 
 import java.util.Scanner;
 
-public class ViewCountry {
+public class CountryController {
     private String countryName = "";
     private float countryCoords = 0;
     private Scanner rawData;
@@ -13,7 +13,7 @@ public class ViewCountry {
     private int targetId = 0;
     private CountryDto country;
 
-    public ViewCountry(int ra){
+    public CountryController(int ra){
         this.requestedAction = ra;
         this.crudPipeline();
 
@@ -92,14 +92,14 @@ public class ViewCountry {
 
     public void deleteData(int id){
         CountryDao countryDao = new CountryDao();
-        countryDao.delete(new CountryDto(0, "", 0), id);
+        countryDao.delete(id);
         System.out.println("Record deleted");
 
     }
 
     public void updateData(int id){
         CountryDao countryDao = new CountryDao();
-        countryDao.update(new CountryDto(0, this.countryName, this.countryCoords), id);
+        countryDao.update(new CountryDto(id, this.countryName, this.countryCoords));
         System.out.println("Record updated");
 
     }

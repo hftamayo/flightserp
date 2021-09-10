@@ -1,6 +1,4 @@
-package sv.com.devskodigo.view.menu;
-
-import sv.com.devskodigo.view.menu.*;
+package sv.com.devskodigo.view;
 
 public class MenuItem extends MenuComponent {
 
